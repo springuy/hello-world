@@ -1,1 +1,9 @@
-# 123
+# last 7 days max cpu pod utilization in millicores per ns
+max by (pod) (
+  max_over_time(rate(container_cpu_usage_seconds_total{namespace="<namespace>", container!="POD"}[1m])[7d:]) * 1000
+)
+
+# last 7 days max mem pod utilization in megabytes per ns
+max by (pod) (
+    max_over_time(container_memory_usage_bytes{namespace="monitoring", container!="POD"}[7d:]) / 1024 / 1024
+)
